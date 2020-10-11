@@ -51,13 +51,13 @@ def main():
     args = parser.parse_args()
 
     run = Run.get_context()
-    
+
     run.log("Regularization Strength:", np.float(args.C))
     run.log("Max iterations:", np.int(args.max_iter))
 
     # load and cleandata
     data_url = "https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv"
-    ds = TabularDatasetFactory(data_url)
+    ds = TabularDatasetFactory.from_delimited_files(data_url)
     x, y = clean_data(ds)
     # Split data into train and test sets.
     x_train, x_test, y_train, y_test = train_test_split(x, y, stratify=y, random_state=42)
@@ -66,6 +66,13 @@ def main():
 
     accuracy = model.score(x_test, y_test)
     run.log("Accuracy", np.float(accuracy))
+
+    # save model
+    # model_file_name = f'logistic_regression_c={args.C}_max_iter={args.max_iter}.pkl'
+    os.makedirs('outputs', exist_ok=True)
+    # files saved in the "outputs" folder are automatically uploaded into run history
+    joblib.dump(model, 'outputs/logistic_regression_model.pk')
+
 
 if __name__ == '__main__':
     main()
