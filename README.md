@@ -17,10 +17,9 @@ The pipeline consists of loading the data from a URL, then cleaning it, and fitt
 The best model from AutoML was a VotingEnsemble model which combines several models' predictions to come up with final predictions.
 
 ## Pipeline comparison
-The logistic regression model had an accuracy of 0.9048312697256615, while AutoML had accuracy of 0.9485.  Clearly the AutoML model is superior.  The logistic regression model is matrix math essentially, and the AutoML model is a complex combination of several models.  
-**Compare the two models and their performance. What are the differences in accuracy? In architecture? If there was a difference, why do you think there was one?**
+The logistic regression model had an accuracy of 0.9048312697256615, while AutoML had accuracy of 0.9485.  Clearly the AutoML model is superior.  The logistic regression model is matrix math essentially, and the AutoML model is a complex combination of several models.  The AutoML model tries a lot more models and is bound to be better.  The logistic regression model also didn't have enough of the hyperparameter space searched so is probably underperforming a bit.
 
 ## Future work
-The logistic regression model hyperparameter search could be improved, because we only searched a tiny amount of the hyperparamteer space.
+The logistic regression model hyperparameter search could be improved, because we only searched a tiny amount of the hyperparamteer space.  We could use the `choice()` function to choose a few typical values, like 0.1, 1, and 10.
 
 For AutoML, we could enable stacked models, enable neural networks, and the iterations of number of different models the AutoML algorithm is allowed to try.  We should also blacklist algos that take a long time, like SVMs, to be more efficient with time.  The SVM algo in the run took almost half the total time.
