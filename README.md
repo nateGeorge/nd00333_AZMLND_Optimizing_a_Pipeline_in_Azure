@@ -11,10 +11,10 @@ The data is a bank marketing dataset [from UCI](https://archive.ics.uci.edu/ml/d
 The best performing model was a VotingEnsemble which combined the outputs of several different models, and was found from AutoML.
 
 ## Scikit-learn Pipeline
-The pipeline consists of loading the data from a URL, then cleaning it, and fitting a model to it.  Hyperparameters were tuned using AzureML's HyperDrive by randomly searching a space.  The algorithm was a logistic regression model since this is binary classification, and the `C` regularization hyperparameter was optimized.  The random sampler can be good for checking a wide variety of values to optimize the model.  The early stopping model, bandit, cuts off runs if they are not improving their accuracy enough and can save compute power.
+The pipeline consists of loading the data from a URL, then cleaning it, and fitting a model to it.  Hyperparameters were tuned using AzureML's HyperDrive by randomly searching a space.  The algorithm was a logistic regression model since this is binary classification, and the `C` regularization hyperparameter was optimized with a uniform distribution from 0.1 to 100, since this is around the typical range of C.  The random sampler can be good for checking a wide variety of values to optimize the model.  The early stopping model, bandit, cuts off runs if they are not improving their accuracy enough and can save compute power.
 
 ## AutoML
-The best model from AutoML was a VotingEnsemble model which combines several models' predictions to come up with final predictions.
+The best model from AutoML was a VotingEnsemble model which combines several models' predictions to come up with final predictions.  It seems to use a MaxAbsScaler, then use LightGBM and SGD with some optimized hyperpameters.
 
 ## Pipeline comparison
 The logistic regression model had an accuracy of 0.9048312697256615, while AutoML had accuracy of 0.9485.  Clearly the AutoML model is superior.  The logistic regression model is matrix math essentially, and the AutoML model is a complex combination of several models.  The AutoML model tries a lot more models and is bound to be better.  The logistic regression model also didn't have enough of the hyperparameter space searched so is probably underperforming a bit.
